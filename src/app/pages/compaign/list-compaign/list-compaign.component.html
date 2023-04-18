@@ -1,0 +1,54 @@
+<div class="container">
+  <app-filter (itemFiltre)="submitFilter($event)"></app-filter>
+  <table class="table mt-5 table-curved">
+    <thead>
+      <tr>
+        <th scope="col" class="text-center">Statut</th>
+        <th scope="col">Name</th>
+        <th scope="col">Type</th>
+        <th scope="col">Brand</th>
+        <th scope="col">Submission</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let compaign of Compaigns" (click)="open(mymodal, compaign)">
+        <td>
+          <div class="row">
+            <div class="col-9 text-center">
+              <i
+                [ngClass]="setIconStatus(compaign.requestStatus.name)"
+                style="font-size: 1.3rem"
+              ></i>
+              <div class="mt-1">
+                <span class="d-block"> {{ compaign.requestStatus.value }}</span>
+              </div>
+            </div>
+            <div class="col-2"><h2>|</h2></div>
+          </div>
+        </td>
+        <td>{{ compaign.campaignName }}</td>
+        <td>
+          <span
+            [ngClass]="
+              compaign.advice == true ? 'badge bg-danger' : 'badge bg-secondary'
+            "
+            >{{ compaign.advice == true ? "Advice" : "Request" }}</span
+          >
+        </td>
+        <td>{{ compaign.brand.name }}</td>
+        <td>
+          {{ compaign.submittedDate | dateFormat }}
+        </td>
+        <td><i class="bi bi-chevron-compact-right"></i></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<!-- modal edit  -->
+<ng-template #mymodal let-modal>
+  <app-edit-compaign
+    [modalInput]="modal"
+    [compaignEdit]="compaignEditValue"
+  ></app-edit-compaign>
+</ng-template>
